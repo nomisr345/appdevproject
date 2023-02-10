@@ -1,0 +1,84 @@
+{% extends "base.html" %}
+{% block title %}Library Loan System - Retrieve Feedbacks{% endblock %}
+
+{% block content %}
+<h1 style="color:black;text-align:center;">Viewing of Customer feedbacks</h1>
+<div>
+  <table class="table table-striped">
+    <thead>
+      <tr>
+        <th>First Name</th>
+        <th>Last Name</th>
+        <th>Email</th>
+        <th>Rating</th>
+        <th>Category</th>
+        <th>Write-up of praises or complains</th>
+        <th></th>
+        <th></th>
+      </tr>
+    </thead>
+    <tbody>
+    {% for feedback in feedbacks_list %}
+     <tr>
+        <td>{{ feedback.get_first_name() }}</td>
+        <td>{{ feedback.get_last_name() }}</td>
+         <td>{{ feedback.get_email() }}</td>
+
+          {% if feedback.get_gender() == "1" %}
+        <td style="color:red;font-weight:bold;">1</td>
+        {% elif feedback.get_gender() == "2" %}
+        <td style="color:orange;font-weight:bold;">2</td>
+        {% elif feedback.get_gender() == "3" %}
+        <td style="color:green;font-weight:bold;">3</td>
+        {% endif %}
+
+        {% if feedback.get_membership() == "W" %}
+        <td>Website</td>
+        {% elif feedback.get_membership() == "S" %}
+        <td>Service</td>
+        {% elif feedback.get_membership() == "P" %}
+        <td>Product</td>
+        {% endif %}
+        <td>{{ feedback.get_remarks() }}</td>
+        <td><a href="/updateFeedback/{{feedback.get_feedback_id()}}" class="btn btn-warning">View</a></td>
+        <td>
+          <form action="{{url_for('delete_feedback', id=feedback.get_feedback_id())}}" method="POST">
+<!--            <input type="submit" value="Delete" class="btn btn-danger" onclick="return confirm('Are you sure you want to delete {{user.get_first_name()}} {{user.get_last_name()}}?');">-->
+<!-- Button to Open the Modal -->
+<button type="button" class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#myModal_{{feedback.get_feedback_id()}}">
+  Delete
+</button>
+
+<!-- The Modal -->
+<div class="modal" id="myModal_{{feedback.get_feedback_id()}}">
+  <div class="modal-dialog">
+    <div class="modal-content">
+
+      <!-- Modal Header -->
+      <div class="modal-header">
+        <h4 class="modal-title">Delete Confirmation</h4>
+        <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+      </div>
+
+      <!-- Modal body -->
+      <div class="modal-body">
+        Are you sure you want to delete?
+      </div>
+
+      <!-- Modal footer -->
+      <div class="modal-footer">
+        <input type="submit" value="Delete" class="btn btn-danger">
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+      </div>
+
+    </div>
+  </div>
+</div>
+          </form>
+        </td>
+     </tr>
+    {% endfor %}
+    </tbody>
+  </table>
+</div>
+{% endblock %}

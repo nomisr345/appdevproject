@@ -1,0 +1,37 @@
+{% extends "base.html" %}
+{% block title %}Library Loan System - Create Feedback{% endblock %}
+
+{% block content %}
+{% from "includes/_formHelper.html" import render_field %}
+
+<h1 class="display-4">Feedback</h1>
+<p>Dear Customers, upon finishing this feedback you will recieve a $3 voucher from us as a thank you for doing this feedback for us to help us improve!</p>
+<p> The $3 voucher will send to your email, if you have any enquries, please email us @cupcakestroy@gmail.com</p>
+<form method="POST" action="">
+  <div class="form-group">
+    {{ render_field(form.first_name, class="form-control") }}
+  </div>
+  <div class="form-group">
+    {{ render_field(form.last_name, class="form-control") }}
+  </div>
+  <div class="form-group">
+    {{ render_field(form.email, class="form-control") }}
+  </div>
+  <div class="form-group">
+    {{ render_field(form.gender, class="form-control") }}
+  </div>
+  <div class="form-group">
+    {{ render_field(form.membership, class="form-check", style="list-style-type:none") }}
+  </div>
+  <div id="prof">
+    <div class="form-group">
+      {{ render_field(form.remarks, class="form-control") }}
+    </div>
+  </div>
+  <a href="/thankYou.html">
+    <input type="submit" value="Submit" class="btn btn-primary"/>
+  </a>
+</form>
+{% endblock %}
+
+
